@@ -1,5 +1,13 @@
 <template>
 	<div class="ml-5 mt-5 mr-5">
+		<v-row>
+			<v-col cols="3">
+				<v-btn>
+					<v-icon>mdi-plus</v-icon>
+					<span class="pl-2">New Todo</span>
+				</v-btn>
+			</v-col>
+		</v-row>
 		<name-description-action-table
 			:customHeaders="todoHeaders"
 			:customItems="$store.state.todos"
