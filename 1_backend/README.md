@@ -9,3 +9,8 @@ npm install
 ```
 npm run start
 ```
+
+### Run unit tests: start the backend server before running unit tests
+```
+npm run test-only
+```
