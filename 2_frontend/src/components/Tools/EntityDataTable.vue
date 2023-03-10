@@ -1,14 +1,16 @@
 <template>
 	<v-data-table
+		:key="typeItems"
 		:items-per-page="5"
 		:headers="customHeaders"
 		:items="customItems"
+		width="auto"
 	>
 		<template v-slot:body="{ items }">
 			<tbody>
-				<tr v-for="item in items" :key="item">
-					<td align="left">{{ item.Name }}</td>
-					<td align="left">{{ item.Description }}</td>
+				<tr v-for="item in items" :key="item.Name">
+					<td v-show="item.Name" align="left">{{ item.Name }}</td>
+					<td v-show="item.Description" align="left">{{ item.Description }}</td>
 					<td align="right">
 						<v-tooltip open-delay="500" bottom>
 							<template v-slot:activator="{ on, attrs }">
@@ -38,8 +40,16 @@
 import { Component, Vue, Prop } from "vue-property-decorator";
 
 @Component
-export default class NameDescriptionActionTable extends Vue {
+export default class EntityDataTable extends Vue {
 	@Prop(Array) customHeaders!: Array<object>;
-	@Prop(Array) customItems!: Array<object>;
+	@Prop(String) typeItems!: string;
+
+	get customItems() {
+		if (this.typeItems === "todos") {
+			return this.$store.state.todos;
+		} else {
+			return [];
+		}
+	}
 }
 </script>

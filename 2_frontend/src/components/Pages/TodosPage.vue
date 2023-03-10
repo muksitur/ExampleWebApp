@@ -2,44 +2,50 @@
 	<div class="ml-5 mt-5 mr-5">
 		<v-row>
 			<v-col cols="3">
-				<v-btn>
+				<v-btn @click="showDialog = !showDialog" outlined>
 					<v-icon>mdi-plus</v-icon>
 					<span class="pl-2">New Todo</span>
 				</v-btn>
+				<dialog-box
+					v-model="showDialog"
+					actionButtonColor="success"
+					actionButtonText="add"
+					dialogHeader="Add new Todo"
+					:dialogItems="['Name', 'Description']"
+				/>
 			</v-col>
 		</v-row>
-		<name-description-action-table
+		<entity-data-table
+			class="mt-5"
 			:customHeaders="todoHeaders"
-			:customItems="$store.state.todos"
+			typeItems="todos"
 		/>
 	</div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import NameDescriptionActionTable from "../Tools/NameDescriptionActionTable.vue";
+import EntityDataTable from "../Tools/EntityDataTable.vue";
+import DialogBox from "../Tools/DialogBox.vue";
 
 @Component({
 	components: {
-		NameDescriptionActionTable,
+		EntityDataTable,
+		DialogBox,
 	},
 })
 export default class TodosPage extends Vue {
+	public showDialog = false;
 	public get todoHeaders() {
 		const headers = [
 			{
 				text: "Name",
-				value: "displayName",
-				key: "Name",
 			},
 			{
 				text: "Description",
-				value: "displayDescription",
-				key: "Description",
 			},
 			{
 				text: "",
-				value: "Actions",
 				sortable: false,
 			},
 		];
