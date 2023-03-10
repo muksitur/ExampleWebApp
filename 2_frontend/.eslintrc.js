@@ -17,6 +17,7 @@ module.exports = {
 		"vue/multi-word-component-names": 0,
 		"no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
 		"prettier/prettier": ["error", { useTabs: true }],
+		"@typescript-eslint/no-explicit-any": "off",
 	},
 	overrides: [
 		{

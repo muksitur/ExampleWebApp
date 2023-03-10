@@ -39,7 +39,7 @@ export default class DialogBox extends Vue {
 	@Prop(String) actionButtonText!: string;
 	@Prop(Array) dialogItems!: Array<string>;
 
-	public dialogItemValues: Array<string> = [];
+	public dialogItemValues: Array<any> = [];
 
 	public dialog = false;
 
@@ -53,6 +53,11 @@ export default class DialogBox extends Vue {
 
 	public async actionOK() {
 		if (this.dialogHeader === "Add new Todo") {
+			for (let index = 0; index < this.dialogItemValues.length; index++) {
+				if (this.dialogItemValues[index] === "") {
+					this.dialogItemValues[index] = null;
+				}
+			}
 			this.$store.commit("createTodo", this.dialogItemValues);
 		}
 		this.innerValue = !this.innerValue;

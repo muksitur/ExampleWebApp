@@ -20,6 +20,16 @@
 			:customHeaders="todoHeaders"
 			typeItems="todos"
 		/>
+		<snack-bar
+			v-model="$store.state.errorFlag"
+			snackbarColor="error"
+			:snackbarMessage="$store.state.errorMessage"
+		/>
+		<snack-bar
+			v-model="$store.state.successFlag"
+			snackbarColor="success"
+			:snackbarMessage="$store.state.successMessage"
+		/>
 	</div>
 </template>
 
@@ -27,16 +37,19 @@
 import { Component, Vue } from "vue-property-decorator";
 import EntityDataTable from "../Tools/EntityDataTable.vue";
 import DialogBox from "../Tools/DialogBox.vue";
+import SnackBar from "../Tools/SnackBar.vue";
 
 @Component({
 	components: {
 		EntityDataTable,
 		DialogBox,
+		SnackBar,
 	},
 })
 export default class TodosPage extends Vue {
 	public showDialog = false;
-	public get todoHeaders() {
+
+	get todoHeaders() {
 		const headers = [
 			{
 				text: "Name",
