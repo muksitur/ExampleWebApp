@@ -10,6 +10,7 @@
 					v-model="showDialog"
 					actionButtonColor="success"
 					actionButtonText="add"
+					typeItems="todo"
 					dialogHeader="Add new Todo"
 					:dialogItems="['Name', 'Description']"
 				/>
@@ -18,7 +19,7 @@
 		<entity-data-table
 			class="mt-5"
 			:customHeaders="todoHeaders"
-			typeItems="todos"
+			typeItems="todo"
 		/>
 		<snack-bar
 			v-model="$store.state.errorFlag"

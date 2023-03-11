@@ -53,6 +53,58 @@ export default new Vuex.Store({
 					state.errorMessage = await error.response.data.message;
 				});
 		},
+
+		async deleteTodo(state, uuid) {
+			state.errorFlag = false;
+			state.successFlag = false;
+			state.successMessage = "";
+			state.errorMessage = "";
+			await axios
+				.delete(baseUrl + "/todo/" + uuid)
+				.then(async (response) => {
+					await axios.get(baseUrl + "/todo/read-all").then(async (response) => {
+						state.todos = await response.data.data;
+					});
+					state.successFlag = true;
+					state.successMessage = await response.data.message;
+				})
+				.catch(async (error) => {
+					state.errorFlag = true;
+					state.errorMessage = await error.response.data.message;
+				});
+		},
+
+		async updateTodo(state, { values, uuid }) {
+			let payload: any;
+			if (values[1]) {
+				payload = {
+					Name: values[0],
+					Description: values[1],
+				};
+			} else {
+				payload = {
+					Name: values[0],
+				};
+			}
+
+			state.errorFlag = false;
+			state.successFlag = false;
+			state.successMessage = "";
+			state.errorMessage = "";
+			await axios
+				.put(baseUrl + "/todo/" + uuid, payload)
+				.then(async (response) => {
+					await axios.get(baseUrl + "/todo/read-all").then(async (response) => {
+						state.todos = await response.data.data;
+					});
+					state.successFlag = true;
+					state.successMessage = await response.data.message;
+				})
+				.catch(async (error) => {
+					state.errorFlag = true;
+					state.errorMessage = await error.response.data.message;
+				});
+		},
 	},
 	actions: {},
 	modules: {},
