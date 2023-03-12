@@ -4,19 +4,25 @@ import { createTodo, deleteTodoByName, deleteTodoByUuid, readAllTodo, readTodoBy
 const router = express.Router();
 
 /**
- * /v1/todo:
+ * @swagger
+ * /example/v1/todo:
  *   post:
  *     operationId: createTodo
  *     tags:
- *     - user
+ *     - todo
  *     summary: Create todo.
  *     description: Creates a new todo.
- *     requestBody: Attributes 'Name' and 'Description'
+ *     requestBody: 
+ *       $ref: '#/components/requestBodies/TodoCreateRequest'
  *     responses:
- *       200: Success OK
- *       400: BadRequestError
- *       404: NotFoundError
- *       409: ConflictError
+ *       200:
+ *         $ref: '#/components/responses/EmptyResponse'
+ *       400:
+ *         $ref: '#/components/responses/BadRequestError'
+ *       404:
+ *         $ref: '#/components/responses/NotFoundError'
+ *       409:
+ *         $ref: '#/components/responses/ConflictError'
  */
 router.post(
 	'/',
@@ -24,19 +30,23 @@ router.post(
 );
 
 /**
- * /v1/todo:
+ * /example/v1/todo:
  *   delete:
  *     operationId: deleteTodoByName
  *     tags:
- *     - user
+ *     - todo
  *     summary: Delete todo.
  *     description: Deletes a todo.
  *     requestBody: Attribute 'Name'
  *     responses:
- *       200: Success OK
- *       400: BadRequestError
- *       404: NotFoundError
- *       409: ConflictError
+ *       200:
+ *         $ref: '#/components/responses/EmptyResponse'
+ *       400:
+ *         $ref: '#/components/responses/BadRequestError'
+ *       404:
+ *         $ref: '#/components/responses/NotFoundError'
+ *       409:
+ *         $ref: '#/components/responses/ConflictError'
  */
 router.delete(
 	'/',
@@ -44,18 +54,23 @@ router.delete(
 );
 
 /**
- * /v1/todo/read-all:
+ * @swagger
+ * /example/v1/todo/read-all:
  *   get:
  *     operationId: readAllTodo
  *     tags:
- *     - user
+ *     - todo
  *     summary: Read all todos.
  *     description: Reads the list of all todos.
  *     responses:
- *       200: Success OK
- *       400: BadRequestError
- *       404: NotFoundError
- *       409: ConflictError
+ *       200:
+ *         $ref: '#/components/responses/EmptyResponse'
+ *       400:
+ *         $ref: '#/components/responses/BadRequestError'
+ *       404:
+ *         $ref: '#/components/responses/NotFoundError'
+ *       409:
+ *         $ref: '#/components/responses/ConflictError'
  */
 router.get(
 	'/read-all',
@@ -63,19 +78,25 @@ router.get(
 );
 
 /**
- * /v1/todo/{uuidTodo}:
+ * @swagger
+ * /example/v1/todo/{uuidTodo}:
  *   delete:
  *     operationId: deleteTodoByUuid
  *     tags:
- *     - user
+ *     - todo
  *     summary: Delete todo.
  *     description: Deletes a todo.
- *     parameters: UUID of todo
+ *     parameters:
+ *     - $ref: '#/components/parameters/uuidTodo'
  *     responses:
- *       200: Success OK
- *       400: BadRequestError
- *       404: NotFoundError
- *       409: ConflictError
+ *       200:
+ *         $ref: '#/components/responses/EmptyResponse'
+ *       400:
+ *         $ref: '#/components/responses/BadRequestError'
+ *       404:
+ *         $ref: '#/components/responses/NotFoundError'
+ *       409:
+ *         $ref: '#/components/responses/ConflictError'
  */
 router.delete(
 	'/:uuidTodo',
@@ -83,19 +104,25 @@ router.delete(
 );
 
 /**
- * /v1/todo/{uuidTodo}:
+ * @swagger
+ * /example/v1/todo/{uuidTodo}:
  *   get:
  *     operationId: readTodoByUuid
  *     tags:
- *     - user
+ *     - todo
  *     summary: Read todo.
  *     description: Reads a todo.
- *     parameters: UUID of todo
+ *     parameters: 
+ *     - $ref: '#/components/parameters/uuidTodo'
  *     responses:
- *       200: Success OK
- *       400: BadRequestError
- *       404: NotFoundError
- *       409: ConflictError
+ *       200:
+ *         $ref: '#/components/responses/EmptyResponse'
+ *       400:
+ *         $ref: '#/components/responses/BadRequestError'
+ *       404:
+ *         $ref: '#/components/responses/NotFoundError'
+ *       409:
+ *         $ref: '#/components/responses/ConflictError'
  */
 router.get(
 	'/:uuidTodo',
@@ -103,20 +130,27 @@ router.get(
 );
 
 /**
- * /v1/todo/{uuidTodo}:
- *   get:
+ * @swagger
+ * /example/v1/todo/{uuidTodo}:
+ *   put:
  *     operationId: updateTodoByUuid
  *     tags:
- *     - user
+ *     - todo
  *     summary: Update todo.
  *     description: Updates a todo.
- *     requestBody: Attributes 'Name' and 'Description'
- *     parameters: UUID of todo
+ *     requestBody: 
+ *       $ref: '#/components/requestBodies/TodoUpdateRequest'
+ *     parameters: 
+ *     - $ref: '#/components/parameters/uuidTodo'
  *     responses:
- *       200: Success OK
- *       400: BadRequestError
- *       404: NotFoundError
- *       409: ConflictError
+ *       200:
+ *         $ref: '#/components/responses/EmptyResponse'
+ *       400:
+ *         $ref: '#/components/responses/BadRequestError'
+ *       404:
+ *         $ref: '#/components/responses/NotFoundError'
+ *       409:
+ *         $ref: '#/components/responses/ConflictError'
  */
 router.put(
 	'/:uuidTodo',

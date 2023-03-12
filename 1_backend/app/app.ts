@@ -3,7 +3,9 @@ import cors, { CorsOptions } from 'cors';
 import bodyParser from 'body-parser';
 import connection, { config, PREFIX } from './config';
 import { version } from './version';
-
+import swaggerUi from 'swagger-ui-express';
+import yaml from 'js-yaml';
+import { swaggerDefinition, swaggerDocument } from './swagger';
 // Routes
 import todoRouter from './router/todo.router';
 
@@ -39,7 +41,7 @@ app.use((req, res, next) => {
 	// You need to expose this header to be able to read it with CORS
 	res.setHeader('Access-Control-Expose-Headers', 'Server');
 	// Set the api version to all backend responses.
-	res.setHeader('Server', `example/${version}`);
+	res.setHeader('Server', `example/${version} example-api-version/${swaggerDefinition.info.version}`);
 
 	// Set Strict-Transport-Security to force HTTPS: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security#examples
 	// https://www.rfc-editor.org/rfc/rfc6797#section-7.2
@@ -78,3 +80,16 @@ connection.sync().then(() => {
 });
 
 app.use(PREFIX + '/todo', todoRouter);
+app.use(PREFIX + '/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocument, {
+	// Without this option, the HTML <title> is just "Swagger UI".
+	customSiteTitle: swaggerDocument.info.title
+}));
+app.get(PREFIX + '/swagger.json', function(req, res) {
+	res.setHeader('Content-Type', 'application/json');
+	res.send(swaggerDocument);
+});
+app.get(PREFIX + '/swagger.yaml', function(req, res) {
+	const swaggerSpecYaml = yaml.dump(swaggerDocument);
+	res.setHeader('Content-Type', 'text/plain');
+	res.send(swaggerSpecYaml);
+});
