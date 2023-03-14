@@ -15,5 +15,10 @@ npm run start
 npm run lint
 ```
 
+### Visit the UI: start the frontend server before visiting the UI in
+```
+http://localhost:4802
+```
+
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
