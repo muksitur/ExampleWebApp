@@ -1,4 +1,4 @@
-import { createTask, deleteTaskByName, readAllTask } from '../service/task.service';
+import { createTask, deleteTaskByName, readAllTask, readTaskByUuid } from '../service/task.service';
 import express from 'express';
 
 const router = express.Router();
@@ -75,6 +75,32 @@ router.delete(
 router.get(
 	'/read-all',
 	readAllTask
+);
+
+/**
+ * @swagger
+ * /example/v1/task/{uuidTask}:
+ *   get:
+ *     operationId: readTaskByUuid
+ *     tags:
+ *     - task
+ *     summary: Read task.
+ *     description: Reads a task.
+ *     parameters: 
+ *     - $ref: '#/components/parameters/uuidTask'
+ *     responses:
+ *       200:
+ *         $ref: '#/components/responses/EmptyResponse'
+ *       400:
+ *         $ref: '#/components/responses/BadRequestError'
+ *       404:
+ *         $ref: '#/components/responses/NotFoundError'
+ *       409:
+ *         $ref: '#/components/responses/ConflictError'
+ */
+router.get(
+	'/:uuidTask',
+	readTaskByUuid
 );
 
 export default router;

@@ -34,6 +34,16 @@ export const deleteTaskByName = asyncHandler(async(req, res, next) => {
 	res.status(200).send({ message: "Task deleted successfully", object: objectFound});
 });
 
+export const readTaskByUuid = asyncHandler(async(req, res, next) => {
+	const { uuidTask } = req.params;
+	// check the uuid is valid
+	const validUuid = validateUuid(uuidTask, res);
+	// check if exists
+	const objectFound = await checkIfExists(validUuid, ATTR_UUID, ATTR_TASK, { UUID: validUuid }, res);
+	const taskObj = await Tasks.findOne({ where: objectFound });
+	res.status(200).send({ object: taskObj });
+});
+
 export const readAllTask = asyncHandler(async(req, res, next) => {
 	const allTasks = await Tasks.findAll();
 	res.status(200).send({ data: allTasks });

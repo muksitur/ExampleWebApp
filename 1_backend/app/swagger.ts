@@ -127,6 +127,26 @@ export const swaggerDefinition: OAS3Definition = {
 					type: 'string',
 					format: 'uuid'
 				}
+			},
+			uuidTask: {
+				name: 'uuidTask',
+				in: 'path',
+				description: 'UUID of the task.',
+				required: true,
+				schema: {
+					type: 'string',
+					format: 'uuid'
+				}
+			},
+			uuidStory: {
+				name: 'uuidStory',
+				in: 'path',
+				description: 'UUID of the story.',
+				required: true,
+				schema: {
+					type: 'string',
+					format: 'uuid'
+				}
 			}
 		},
 		requestBodies: {

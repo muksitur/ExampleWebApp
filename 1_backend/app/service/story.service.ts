@@ -1,7 +1,7 @@
 import { Stories } from '../model/story.model';
 import { checkIfExists } from '../tools/accesscontrol';
 import { ATTR_NAME, ATTR_STATUS, ATTR_STORY, ATTR_UUID } from '../tools/constants';
-import { validateReqBody } from '../tools/validator';
+import { validateReqBody, validateUuid } from '../tools/validator';
 import asyncHandler from 'express-async-handler';
 import { v4 as uuidv4 } from 'uuid';
 import { storyWorker } from '../tools/cronjobs';
@@ -27,6 +27,16 @@ export const deleteStoryByName = asyncHandler(async(req, res, next) => {
 	const objectFound = await checkIfExists(Name, ATTR_NAME, ATTR_STORY, obj, res);
 	await Stories.destroy({ where: objectFound });
 	res.status(200).send({ message: "Story deleted successfully", object: objectFound});
+});
+
+export const readStoryByUuid = asyncHandler(async(req, res, next) => {
+	const { uuidStory } = req.params;
+	// check the uuid is valid
+	const validUuid = validateUuid(uuidStory, res);
+	// check if exists
+	const objectFound = await checkIfExists(validUuid, ATTR_UUID, ATTR_STORY, { UUID: validUuid }, res);
+	const storyObj = await Stories.findOne({ where: objectFound });
+	res.status(200).send({ object: storyObj });
 });
 
 export const readAllStory = asyncHandler(async(req, res, next) => {
