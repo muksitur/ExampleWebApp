@@ -1,3 +1,5 @@
+import { Stories } from '../model/story.model';
+import { Tasks } from '../model/task.model';
 import { Todos } from '../model/todo.model';
 
 /**
@@ -36,6 +38,28 @@ export async function checkIfSameKeyValue(value: string | number, key: string, o
 export async function checkIfExists(value: string | number, key: string, objectName: string, actualObject, res) {
 	if (objectName === 'Todo') {
 		const objArray = await Todos.findAll({
+			where: {
+				[key]: value
+			}
+		});
+		if (!objArray.length) {
+			return res
+				.status(404)
+				.send({ message: 'Object not found' });
+		}
+	} else if (objectName === 'Story') {
+		const objArray = await Stories.findAll({
+			where: {
+				[key]: value
+			}
+		});
+		if (!objArray.length) {
+			return res
+				.status(404)
+				.send({ message: 'Object not found' });
+		}
+	} else if (objectName === 'Task') {
+		const objArray = await Tasks.findAll({
 			where: {
 				[key]: value
 			}

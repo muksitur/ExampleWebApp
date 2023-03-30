@@ -8,6 +8,8 @@ import yaml from 'js-yaml';
 import { swaggerDefinition, swaggerDocument } from './swagger';
 // Routes
 import todoRouter from './router/todo.router';
+import storyRouter from './router/story.router';
+import taskRouter from './router/task.router';
 
 
 export let app = express();
@@ -80,6 +82,8 @@ connection.sync().then(() => {
 });
 
 app.use(PREFIX + '/todo', todoRouter);
+app.use(PREFIX + '/story', storyRouter);
+app.use(PREFIX + '/task', taskRouter);
 app.use(PREFIX + '/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocument, {
 	// Without this option, the HTML <title> is just "Swagger UI".
 	customSiteTitle: swaggerDocument.info.title

@@ -1,7 +1,11 @@
 <template>
 	<v-container>
 		<v-row class="text-center mt-5 justify-space-between" cols="12">
-			<v-col v-for="item in items" :key="item.title" cols="3">
+			<v-col
+				v-for="item in items"
+				:key="item.title"
+				:cols="$vuetify.breakpoint.mdAndDown ? 12 : 3"
+			>
 				<v-tooltip open-delay="500" bottom>
 					<template v-slot:activator="{ on, attrs }">
 						<v-card v-on="on" v-bind="attrs" :to="item.path">

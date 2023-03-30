@@ -62,7 +62,60 @@ export const swaggerDefinition: OAS3Definition = {
 						description: 'Description of the todo.'
 					}
 				}
-			}
+			},
+			Story: {
+				type: 'object',
+				properties: {
+					UUID: {
+						type: 'string',
+						format: 'uuid',
+						description: 'UUID of the story.'
+					},
+					id: {
+						type: 'integer',
+						description: 'Auto generated serial number'
+					},
+					Name: {
+						type: 'string',
+						description: 'Name of the story.'
+					},
+					Status: {
+						type: 'string',
+						description: 'State of the task: \'Open\' or \'Close\'.'
+					}
+				}
+			},
+			Task: {
+				type: 'object',
+				properties: {
+					UUID: {
+						type: 'string',
+						format: 'uuid',
+						description: 'UUID of the task.'
+					},
+					id: {
+						type: 'integer',
+						description: 'Auto generated serial number'
+					},
+					storyUUID: {
+						type: 'string',
+						format: 'uuid',
+						description: 'UUID of the story.'
+					},
+					Name: {
+						type: 'string',
+						description: 'Name of the task.'
+					},
+					Estimate: {
+						type: 'integer',
+						description: 'Number of seconds estimated to complete the task'
+					},
+					Status: {
+						type: 'string',
+						description: 'State of the task: \'Open\' or \'Close\'.'
+					}
+				}
+			},
 		},
 		parameters: {
 			uuidTodo: {
@@ -90,6 +143,49 @@ export const swaggerDefinition: OAS3Definition = {
 								Description: {
 									type: 'string',
 									description: 'Description of the todo.'
+								}
+							}
+						}
+					}
+				}
+			},
+			StoryCreateRequest: {
+				required: true,
+				content: {
+					'application/json': {
+						schema: {
+							properties: {
+								Name: {
+									type: 'string',
+									description: 'Name of the story.'
+								}
+							}
+						}
+					}
+				}
+			},
+			TaskCreateRequest: {
+				required: true,
+				content: {
+					'application/json': {
+						schema: {
+							properties: {
+								storyUUID: {
+									type: 'string',
+									format: 'uuid',
+									description: 'UUID of the story.'
+								},
+								Name: {
+									type: 'string',
+									description: 'Name of the task.'
+								},
+								Estimate: {
+									type: 'integer',
+									description: 'Number of seconds estimated to complete the task'
+								},
+								Status: {
+									type: 'string',
+									description: 'State of the task: \'Open\' or \'Close\'.'
 								}
 							}
 						}
@@ -190,8 +286,7 @@ export const swaggerDefinition: OAS3Definition = {
 								},
 								objectType: {
 									type: 'string',
-									description: 'The type of the object that was not found.',
-									example: 'Collection'
+									description: 'The type of the object that was not found.'
 								}
 							}
 						}

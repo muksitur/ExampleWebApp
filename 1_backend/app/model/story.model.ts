@@ -2,10 +2,10 @@ import { Table, Model, Column, DataType } from 'sequelize-typescript';
 
 @Table({
 	timestamps: false,
-	tableName: 'Todos',
+	tableName: 'Stories',
 })
 
-export class Todos extends Model {
+export class Stories extends Model {
 	@Column({
 		type: DataType.UUID,
 		allowNull: false
@@ -22,5 +22,5 @@ export class Todos extends Model {
 		type: DataType.STRING,
 		allowNull: false
 	})
-	Description!: string;
+	Status!: string;
 }

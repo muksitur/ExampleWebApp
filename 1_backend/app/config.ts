@@ -1,5 +1,7 @@
 import { Sequelize } from 'sequelize-typescript';
 import { Todos } from './model/todo.model';
+import { Stories } from './model/story.model';
+import { Tasks } from './model/task.model';
 
 const connection = new Sequelize({
 	dialect: 'mysql',
@@ -8,7 +10,7 @@ const connection = new Sequelize({
 	password: 'sonata',
 	database: 'Test',
 	logging: false,
-	models: [Todos],
+	models: [Todos, Stories, Tasks],
 });
 
 export default connection;
