@@ -15,7 +15,7 @@ export const createStory = asyncHandler(async(req, res, next) => {
 	obj[ATTR_UUID] = uuidv4();
 	const story = await Stories.create(obj);
 	res.status(200).send({ message: "Story created successfully", object: story});
-    await storyWorker(story, res);
+    await storyWorker(story);
 });
 
 export const deleteStoryByName = asyncHandler(async(req, res, next) => {

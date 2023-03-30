@@ -20,7 +20,7 @@ export const createTask = asyncHandler(async(req, res, next) => {
 	obj[ATTR_UUID] = uuidv4();
 	const task = await Tasks.create(obj);
 	res.status(200).send({ message: "Task added successfully to story uuid: "+validStoryUuid, object: task});
-	await taskWorker(task, res);
+	await taskWorker(task);
 });
 
 export const deleteTaskByName = asyncHandler(async(req, res, next) => {

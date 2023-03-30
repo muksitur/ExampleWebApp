@@ -2,7 +2,12 @@ import { Stories } from '../model/story.model';
 import { Tasks } from '../model/task.model';
 import { ATTR_STORY_UUID } from './constants';
 
-export async function taskWorker(taskObject, res) {
+/**
+ * Closes the task, when finished
+ * **params**
+ * taskObject: task object to close
+ */
+export async function taskWorker(taskObject) {
 	return new Promise( () => {
 		setTimeout( async() => {
 			const taskToUpdate = await Tasks.findOne({ where: { UUID: taskObject.UUID } });
@@ -12,7 +17,12 @@ export async function taskWorker(taskObject, res) {
 	});
 }
 
-export async function storyWorker(storyObject, res) {
+/**
+ * Closes the story, when finished
+ * **params**
+ * storyObject: story object to close
+ */
+export async function storyWorker(storyObject) {
 	return new Promise( async () => {
 		const storyWorkerInterval = setInterval( async() => {
 			const taskArray = await Tasks.findAll({
