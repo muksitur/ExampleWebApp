@@ -3,6 +3,7 @@ import VueRouter, { RouteConfig } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import AboutView from "../views/AboutView.vue";
 import TodosView from "../views/TodosView.vue";
+import StoriesView from "../views/StoriesView.vue";
 
 Vue.use(VueRouter);
 
@@ -24,6 +25,11 @@ const routes: Array<RouteConfig> = [
 		// this generates a separate chunk (about.[hash].js) for this route
 		// which is lazy-loaded when the route is visited.
 		component: TodosView,
+	},
+	{
+		path: "/stories",
+		name: "stories",
+		component: StoriesView,
 	},
 	{
 		path: "*",

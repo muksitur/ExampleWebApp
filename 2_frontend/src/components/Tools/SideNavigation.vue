@@ -43,6 +43,11 @@ export default class SideNav extends Vue {
 		{ title: "Home", icon: "mdi-home-outline", path: "/" },
 		{ title: "About", icon: "mdi-information-outline", path: "/about" },
 		{ title: "Todos", icon: "mdi-calendar-check-outline", path: "/todos" },
+		{
+			title: "Stories",
+			icon: "mdi-book-open-page-variant-outline",
+			path: "/stories",
+		},
 	];
 	rail = false;
 }

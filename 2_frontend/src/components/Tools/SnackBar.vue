@@ -11,8 +11,11 @@ import { Component, Vue, Prop } from "vue-property-decorator";
 
 @Component
 export default class SnackBar extends Vue {
+	// Color of the snack bar
 	@Prop(String) snackbarColor!: string;
+	// Message to show on the snack bar
 	@Prop(String) snackbarMessage!: string;
+	// Meant for toggling inner value (show/hide) of the snack bar
 	@Prop(Boolean) public value!: boolean;
 	public get innerValue() {
 		return this.value;

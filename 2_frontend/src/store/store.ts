@@ -8,6 +8,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
 	state: {
 		todos: [],
+		stories: [],
+		tasks: [],
 		errorMessage: "",
 		successMessage: "",
 		errorFlag: false,
@@ -104,6 +106,20 @@ export default new Vuex.Store({
 					state.errorFlag = true;
 					state.errorMessage = await error.response.data.message;
 				});
+		},
+
+		async getAllStories(state) {
+			state.errorMessage = "";
+			await axios.get(baseUrl + "/story/read-all").then(async (response) => {
+				state.stories = await response.data.data;
+			});
+		},
+
+		async getAllTasks(state) {
+			state.errorMessage = "";
+			await axios.get(baseUrl + "/task/read-all").then(async (response) => {
+				state.tasks = await response.data.data;
+			});
 		},
 	},
 	actions: {},
