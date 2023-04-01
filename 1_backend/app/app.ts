@@ -10,6 +10,7 @@ import { swaggerDefinition, swaggerDocument } from './swagger';
 import todoRouter from './router/todo.router';
 import storyRouter from './router/story.router';
 import taskRouter from './router/task.router';
+import { cronjobStoryTask } from './tools/cronjobs';
 
 
 export let app = express();
@@ -77,6 +78,7 @@ app.use((
 
 connection.sync().then(() => {
 	console.log('Database synced successfully');
+	cronjobStoryTask();
 }).catch((err) => {
 	console.log('Error occurred', err);
 });

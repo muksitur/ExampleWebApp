@@ -10,7 +10,7 @@ import { ATTR_STORY_UUID } from './constants';
 export async function taskWorker(taskObject) {
 	return new Promise( () => {
 		setTimeout( async() => {
-			const taskToUpdate = await Tasks.findOne({ where: { UUID: taskObject.UUID } });
+			const taskToUpdate = await Tasks.findOne({ where: { UUID: taskObject.UUID, Status: "Open" } });
 			await taskToUpdate?.update({ Status: "Close" });
 			await taskToUpdate?.save();
 		}, taskObject.Estimate * 1000);
@@ -35,7 +35,7 @@ export async function storyWorker(storyObject) {
 					return task.Status === 'Close'
 				});
 				if ( result === true) {
-					const storyToUpdate = await Stories.findOne({ where: { UUID: storyObject.UUID } });
+					const storyToUpdate = await Stories.findOne({ where: { UUID: storyObject.UUID, Status: "Open" } });
 					await storyToUpdate?.update({ Status: "Close" });
 					await storyToUpdate?.save();
 					clearInterval(storyWorkerInterval);
@@ -43,4 +43,20 @@ export async function storyWorker(storyObject) {
 			}
 		}, 1000);
 	});
+}
+
+export async function cronjobStoryTask() {
+	console.log('Cronjobs started');
+	const storyArray = await Stories.findAll();
+	const taskArray = await Tasks.findAll();
+	if (taskArray.length > 0) {
+		for (const taskObject of taskArray) {
+			taskWorker(taskObject);
+		}
+	}
+	if (storyArray.length > 0) {
+		for (const storyObject of storyArray) {
+			storyWorker(storyObject);
+		}
+	}
 }
