@@ -77,7 +77,7 @@ export const swaggerDefinition: OAS3Definition = {
 					},
 					Name: {
 						type: 'string',
-						description: 'Name of the story.'
+						description: 'Name of the story. Cannot be null.'
 					},
 					Status: {
 						type: 'string',
@@ -104,11 +104,11 @@ export const swaggerDefinition: OAS3Definition = {
 					},
 					Name: {
 						type: 'string',
-						description: 'Name of the task.'
+						description: 'Name of the task. Cannot be null.'
 					},
 					Estimate: {
 						type: 'integer',
-						description: 'Number of seconds estimated to complete the task'
+						description: 'Number of seconds estimated to complete the task. Cannot be null.'
 					},
 					Status: {
 						type: 'string',

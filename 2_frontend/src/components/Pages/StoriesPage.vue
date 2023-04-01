@@ -11,7 +11,7 @@
 					actionButtonColor="success"
 					actionButtonText="add"
 					typeItems="story"
-					dialogHeader="Add new Story"
+					dialogHeader="Add new Story (minimum one task)"
 				/>
 			</v-col>
 		</v-row>

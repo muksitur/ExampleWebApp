@@ -5,7 +5,60 @@
 				<v-card-title class="text-h5">
 					{{ dialogHeader }}
 				</v-card-title>
-				<v-card-text>
+				<v-card-text class="mt-3">
+					<div v-show="dialogHeader === 'Add new Story (minimum one task)'">
+						<v-row class="justify-space-between">
+							<v-tooltip open-delay="5" bottom>
+								<template v-slot:activator="{ on, attrs }">
+									<v-btn
+										v-on="on"
+										v-bind="attrs"
+										@click="numberOfTasks++"
+										outlined
+										icon
+									>
+										<v-icon>mdi-plus</v-icon>
+									</v-btn>
+								</template>
+								<p>New Task</p>
+							</v-tooltip>
+							<v-tooltip open-delay="5" bottom>
+								<template v-slot:activator="{ on, attrs }">
+									<v-btn
+										v-show="numberOfTasks > 1"
+										v-on="on"
+										v-bind="attrs"
+										@click="numberOfTasks--"
+										outlined
+										icon
+									>
+										<v-icon>mdi-minus</v-icon>
+									</v-btn>
+								</template>
+								<p>Remove Task</p>
+							</v-tooltip>
+						</v-row>
+						<v-row>
+							<v-text-field
+								v-model="storyName"
+								label="Story Name (not nullable)"
+								variant="outlined"
+							></v-text-field>
+						</v-row>
+						<v-row v-for="(item, index) in numberOfTasks" :key="item">
+							<v-text-field
+								v-model="taskNameValues[index]"
+								label="Task Name (not nullable)"
+								variant="outlined"
+							></v-text-field>
+							<v-text-field
+								v-model="taskEstimateValues[index]"
+								@keypress="filter"
+								label="Estimate (minimum 1 sec)"
+								variant="outlined"
+							></v-text-field>
+						</v-row>
+					</div>
 					<v-text-field
 						v-show="dialogItems"
 						v-for="(item, index) in dialogItems"
@@ -85,6 +138,14 @@ export default class DialogBox extends Vue {
 	@Prop(String) typeSubItems!: string;
 	// Meant for tracking the values in the text fields in the dialog box
 	public dialogItemValues: Array<any> = [];
+	// Meant for only add story dialog box
+	public storyName = "";
+	// Meant for only add story dialog box
+	public taskNameValues: Array<string> = [];
+	// Meant for only add story dialog box
+	public taskEstimateValues: Array<number> = [];
+	// There should be at least one task for each story. Meant for only add story dialog box
+	public numberOfTasks = 1;
 
 	public get innerValue() {
 		return this.value;
@@ -92,6 +153,17 @@ export default class DialogBox extends Vue {
 
 	public set innerValue(value: boolean) {
 		this.$emit("input", value);
+	}
+
+	public async filter(evt) {
+		evt = evt ? evt : window.event;
+		let expect = evt.target.value.toString() + evt.key.toString();
+
+		if (!/^[1-9][0-9]*$/.test(expect)) {
+			evt.preventDefault();
+		} else {
+			return true;
+		}
 	}
 
 	public async actionCancel() {
@@ -109,6 +181,7 @@ export default class DialogBox extends Vue {
 				}
 			}
 			this.$store.commit("createTodo", this.dialogItemValues);
+			this.dialogItemValues = [];
 		} else if (
 			this.dialogHeader.startsWith("Remove") &&
 			this.typeItems === "todo"
@@ -127,6 +200,37 @@ export default class DialogBox extends Vue {
 				values: this.dialogItemValues,
 				uuid: this.uuid,
 			});
+		} else if (
+			this.dialogHeader.startsWith("Add") &&
+			this.typeItems === "story"
+		) {
+			for (let index = 0; index < this.numberOfTasks; index++) {
+				if (!this.taskEstimateValues[index]) {
+					// if the task estimate is null or '', then it should be automatically 1, as minimum estimate
+					this.taskEstimateValues[index] = Number(1);
+				}
+				if (!this.taskNameValues[index]) {
+					// if the task name is null or '', then it should be automatically 'Demo task', as this is not nullable
+					this.taskNameValues[index] = "Demo task";
+				}
+				// if the task estimate number is NaN, then it should be automatically 1, as minimum estimate
+				this.taskEstimateValues[index] = Number(this.taskEstimateValues[index])
+					? Number(this.taskEstimateValues[index])
+					: Number(1);
+			}
+			if (this.storyName === "") {
+				// if the story name is null or '', then it should be automatically 'Demo story', as this is not nullable
+				this.storyName = "Demo story";
+			}
+			this.$store.commit("createStoryTask", {
+				storyName: this.storyName,
+				taskNames: this.taskNameValues,
+				taskEstimates: this.taskEstimateValues,
+			});
+			this.storyName = "";
+			this.taskEstimateValues = [];
+			this.taskNameValues = [];
+			this.numberOfTasks = 1;
 		}
 
 		this.innerValue = !this.innerValue;
