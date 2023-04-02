@@ -8,7 +8,7 @@
 	>
 		<template v-slot:body="{ items }">
 			<tbody>
-				<tr v-for="(item, index) in items" :key="item.Name">
+				<tr v-for="(item, index) in items" :key="item.UUID">
 					<td v-show="item.Name" align="left">{{ item.Name }}</td>
 					<td v-show="item.Description" align="left">{{ item.Description }}</td>
 					<td v-show="item.Status" align="left">{{ item.Status }}</td>
