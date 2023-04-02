@@ -157,6 +157,31 @@ export default new Vuex.Store({
 					state.errorMessage = await error.response.data.message;
 				});
 		},
+
+		async deleteStory(state, uuid) {
+			state.errorFlag = false;
+			state.successFlag = false;
+			state.successMessage = "";
+			state.errorMessage = "";
+			const tasks: any = state.tasks.filter(
+				(task: any) => task.StoryUUID === uuid
+			);
+			await axios
+				.delete(baseUrl + "/story/" + uuid)
+				.then(async (response) => {
+					state.successFlag = true;
+					if (tasks.length > 0) {
+						for (let index = 0; index < tasks.length; index++) {
+							await axios.delete(baseUrl + "/task/" + tasks[index].UUID);
+						}
+					}
+					state.successMessage = await response.data.message;
+				})
+				.catch(async (error) => {
+					state.errorFlag = true;
+					state.errorMessage = await error.response.data.message;
+				});
+		},
 	},
 	actions: {},
 	modules: {},

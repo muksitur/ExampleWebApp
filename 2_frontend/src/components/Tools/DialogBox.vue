@@ -231,6 +231,11 @@ export default class DialogBox extends Vue {
 			this.taskEstimateValues = [];
 			this.taskNameValues = [];
 			this.numberOfTasks = 1;
+		} else if (
+			this.dialogHeader.startsWith("Remove") &&
+			this.typeItems === "story"
+		) {
+			this.$store.commit("deleteStory", this.uuid);
 		}
 
 		this.innerValue = !this.innerValue;

@@ -29,6 +29,16 @@ export const deleteStoryByName = asyncHandler(async(req, res, next) => {
 	res.status(200).send({ message: "Story deleted successfully", object: objectFound});
 });
 
+export const deleteStoryByUuid = asyncHandler(async(req, res, next) => {
+	const { uuidStory } = req.params;
+	// check the uuid is valid
+	const validUuid = validateUuid(uuidStory, res);
+	// check if exists
+	const objectFound = await checkIfExists(validUuid, ATTR_UUID, ATTR_STORY, { UUID: validUuid }, res);
+	await Stories.destroy({ where: objectFound });
+	res.status(200).send({ message: "Story deleted successfully", object: objectFound});
+});
+
 export const readStoryByUuid = asyncHandler(async(req, res, next) => {
 	const { uuidStory } = req.params;
 	// check the uuid is valid

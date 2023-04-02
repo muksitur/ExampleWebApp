@@ -69,7 +69,10 @@
 							<p>Edit</p>
 						</v-tooltip>
 					</td>
-					<td v-show="typeItems === 'todo'" align="left">
+					<td
+						v-show="typeItems === 'todo' || typeItems === 'story'"
+						align="left"
+					>
 						<v-tooltip open-delay="5" bottom>
 							<template v-slot:activator="{ on, attrs }">
 								<v-btn

@@ -1,4 +1,4 @@
-import { createStory, deleteStoryByName, readAllStory, readStoryByUuid } from '../service/story.service';
+import { createStory, deleteStoryByName, deleteStoryByUuid, readAllStory, readStoryByUuid } from '../service/story.service';
 import express from 'express';
 
 const router = express.Router();
@@ -75,6 +75,32 @@ router.delete(
 router.get(
 	'/read-all',
 	readAllStory
+);
+
+/**
+ * @swagger
+ * /example/v1/story/{uuidStory}:
+ *   delete:
+ *     operationId: deleteStoryByUuid
+ *     tags:
+ *     - story
+ *     summary: Delete story.
+ *     description: Deletes a story.
+ *     parameters:
+ *     - $ref: '#/components/parameters/uuidStory'
+ *     responses:
+ *       200:
+ *         $ref: '#/components/responses/EmptyResponse'
+ *       400:
+ *         $ref: '#/components/responses/BadRequestError'
+ *       404:
+ *         $ref: '#/components/responses/NotFoundError'
+ *       409:
+ *         $ref: '#/components/responses/ConflictError'
+ */
+router.delete(
+	'/:uuidStory',
+	deleteStoryByUuid
 );
 
 /**
