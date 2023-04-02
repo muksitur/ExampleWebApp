@@ -5,7 +5,7 @@ import { ATTR_STORY_UUID } from '../tools/constants';
 const taskBaseUrl = 'http://localhost:4800/example/v1/task';
 const storyBaseUrl = 'http://localhost:4800/example/v1/story';
 const storyPayload = { Name: "EatTestStory" };
-const taskCreatePayload = { Name: "EatTestTask", Estimate: 6 };
+const taskCreatePayload = { Name: "EatTestTask", Estimate: 1 };
 const taskDeletePayload = { Name: "EatTestTask" };
 const unknownStoryUUID = '02c2b2c5-7f43-41b7-84b6-b98c78bc5324';
 
