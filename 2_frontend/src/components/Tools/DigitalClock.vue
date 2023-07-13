@@ -16,46 +16,44 @@
 	</div>
 </template>
 
-<script>
-export default {
-	name: "DigitalClock",
-	data() {
-		return {
-			hours: 0,
-			minutes: 0,
-			seconds: 0,
-			days: 0,
-			months: 0,
-			years: 0,
-		};
-	},
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
+
+@Component
+export default class DigitalClock extends Vue {
+	public hours = "";
+	public minutes = "";
+	public seconds = "";
+	public days = "";
+	public months = "";
+	public years = "";
+
+	public setTime() {
+		const date = new Date();
+		let hours = date.getHours().toString();
+		let minutes = date.getMinutes().toString();
+		let seconds = date.getSeconds().toString();
+		let days = date.getDate().toString();
+		let months = (date.getMonth() + 1).toString();
+		let years = date.getFullYear().toString();
+		hours = hours.length < 2 ? "0".concat(hours) : hours;
+		minutes = minutes.length < 2 ? "0".concat(minutes) : minutes;
+		seconds = seconds.length < 2 ? "0".concat(seconds) : seconds;
+		days = days.length < 2 ? "0".concat(days) : days;
+		months = months.length < 2 ? "0".concat(months) : months;
+		years = years.length < 2 ? "0".concat(years) : years;
+		this.hours = hours;
+		this.minutes = minutes;
+		this.seconds = seconds;
+		this.days = days;
+		this.months = months;
+		this.years = years;
+	}
+
 	mounted() {
 		setInterval(() => this.setTime(), 1000);
-	},
-	methods: {
-		setTime() {
-			const date = new Date();
-			let hours = date.getHours();
-			let minutes = date.getMinutes();
-			let seconds = date.getSeconds();
-			let days = date.getDate();
-			let months = date.getMonth() + 1;
-			let years = date.getFullYear();
-			hours = hours <= 9 ? `${hours}`.padStart(2, 0) : hours;
-			minutes = minutes <= 9 ? `${minutes}`.padStart(2, 0) : minutes;
-			seconds = seconds <= 9 ? `${seconds}`.padStart(2, 0) : seconds;
-			days = days <= 9 ? `${days}`.padStart(2, 0) : days;
-			months = months <= 9 ? `${months}`.padStart(2, 0) : months;
-			years = years <= 9 ? `${years}`.padStart(2, 0) : years;
-			this.hours = hours;
-			this.minutes = minutes;
-			this.seconds = seconds;
-			this.days = days;
-			this.months = months;
-			this.years = years;
-		},
-	},
-};
+	}
+}
 </script>
 
 <style scoped>
